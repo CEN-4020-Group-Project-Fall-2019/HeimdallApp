@@ -1,15 +1,15 @@
 package com.example.heimdall;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class Home extends AppCompatActivity {
     private LinearLayout parentLayout;
@@ -30,7 +30,13 @@ public class Home extends AppCompatActivity {
     }
 
     public int addScreen(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("New dialog");
+        builder.setTitle("Test");
 
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
 
         return 1;
         //Intent intent = new Intent(this, AddCard.class);
