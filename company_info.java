@@ -34,7 +34,7 @@ public class company_info extends AppCompatActivity {
 
     public void toAddTwitter(View view) {
         //go to addTwitter page
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, AddTwitter.class);
         startActivity(intent);
     }
 
