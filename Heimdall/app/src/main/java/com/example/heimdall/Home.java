@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,17 +19,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Iterator;
+import java.util.Map;
+
 public class Home extends AppCompatActivity {
     private LinearLayout parentLayout;
-    private int rowCount = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         parentLayout = findViewById(R.id.VerticalLayout);
-        for(int i = 1; i < getIntent().getIntExtra("numRows", 1); ++i){
-            onAddField(this.getCurrentFocus());
-        }
+        loadInCalls(this.getCurrentFocus());
     }
 
     public void backScreen(View view){
@@ -36,8 +37,8 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public int addScreen(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    public void addScreen(View view){
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("New dialog");
         builder.setTitle("Test");
 
@@ -45,16 +46,15 @@ public class Home extends AppCompatActivity {
 
         dialog.show();
 
-        return 1;
+        return 1;*/
         //Intent intent = new Intent(this, AddCard.class);
         //startActivity(intent);
     }
 
     public void onAddField(View v) {
-        int selection = addScreen(this.getCurrentFocus());
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View row = inflater.inflate(R.layout.field, null);
-        TextView t = findViewById(R.id.textView10);
+
+        //View row = inflater.inflate(R.layout.field, null);
+       /* TextView t = findViewById(R.id.textView10);
 
         if(findViewById(R.id.textView10).getTag().equals("none")){
             t.setText("STK" + selection +"(x.x%)");
@@ -66,20 +66,40 @@ public class Home extends AppCompatActivity {
             tmp.setText("NSTK" + selection +"(x.x%)");
             parentLayout.addView(row, parentLayout.getChildCount());
             ++rowCount;
-        }
+        }*/
+    }
 
+    public void loadInCalls(View v){
+        final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("stocks");
+        DatabaseReference myRef = database.getReference("puts");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                java.util.HashMap<String, String> value = (java.util.HashMap<String, String>) dataSnapshot.getValue();
-                Log.d("HEIMDALL", "Number of values is: " + value.size());
+                View row = inflater.inflate(R.layout.field, null);
+                Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
+                String stk = "";
 
-                Log.d("HEIMDALL", String.valueOf(value.containsValue("industry")));
+                int i = 197;
+                Log.d("HEIMDALL", "num children " + dataSnapshot.getChildrenCount());
+                Log.d("HEIMDALL", "IM HERE!!");
+
+                for(Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ){
+                    stk = itr.next().getKey();
+                    TextView tmp = (TextView) row;
+                    Log.d("HEIMDALL", "itr is at " + stk);
+                    tmp.setId(i);
+                    tmp.setText(stk +"(x.x%)");
+                    parentLayout.addView(row);
+                    row = inflater.inflate(R.layout.field, null);
+                }
+
+
+                //Log.d("HEIMDALL", "Number of values is: " + datas.toString());
+
             }
 
             @Override
