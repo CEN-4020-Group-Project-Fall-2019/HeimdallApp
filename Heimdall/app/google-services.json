@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "537168115102",
+    "firebase_url": "https://heimdallcen4020.firebaseio.com",
+    "project_id": "heimdallcen4020",
+    "storage_bucket": "heimdallcen4020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537168115102:android:b767dfd774b9dcf171528f",
+        "android_client_info": {
+          "package_name": "com.example.heimdall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537168115102-r8fldrnf08kqnu9r8c6uc1m9e1gqmbl4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.heimdall",
+            "certificate_hash": "3280af08efb7fb5cd7b5178ba0ab85b7e0e56b50"
+          }
+        },
+        {
+          "client_id": "537168115102-jfib7jlkaa04vesbu50i8d7jb1o65emh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7JL2CmvI7T8dVFLwM7aBC_X-3Cbo3U-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537168115102-jfib7jlkaa04vesbu50i8d7jb1o65emh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

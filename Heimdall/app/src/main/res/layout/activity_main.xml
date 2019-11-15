@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/FPpw" />
 
     <TextView
         android:id="@+id/registerButton"
@@ -80,7 +80,7 @@
         app:layout_constraintVertical_bias="0.054" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/FPuname"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="32dp"
@@ -96,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/FPpw"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="32dp"
@@ -109,6 +109,6 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/FPuname" />
 
 </android.support.constraint.ConstraintLayout>

@@ -6,10 +6,17 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Home extends AppCompatActivity {
     private LinearLayout parentLayout;
@@ -60,6 +67,27 @@ public class Home extends AppCompatActivity {
             parentLayout.addView(row, parentLayout.getChildCount());
             ++rowCount;
         }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("stocks");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                java.util.HashMap<String, String> value = (java.util.HashMap<String, String>) dataSnapshot.getValue();
+                Log.d("HEIMDALL", "Number of values is: " + value.size());
+
+                Log.d("HEIMDALL", String.valueOf(value.containsValue("industry")));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("HEIMDALL", "Failed to read value.", error.toException());
+            }
+        });
     }
 
     public void infoScreen(View view){
@@ -70,13 +98,13 @@ public class Home extends AppCompatActivity {
     }
 
     public void settingsScreen(View view){
-        Intent intent = new Intent(this, Settings.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, Settings.class);
+//        startActivity(intent);
     }
 
     public void recommendationsScreen(View view){
-        Intent intent = new Intent(this, Recommendation.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, Recommendation.class);
+//        startActivity(intent);
     }
 
 
