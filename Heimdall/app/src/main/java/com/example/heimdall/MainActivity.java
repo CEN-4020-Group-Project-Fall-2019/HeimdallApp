@@ -40,26 +40,31 @@ public class MainActivity extends AppCompatActivity {
         String email = em.getText().toString();
         String password = pw.getText().toString();
 
-        Log.d("HEIMDALL", email + "\t\t" + password);
+        if(email.length() > 0 && password.length() > 0) {
+            Log.d("HEIMDALL", email + "\t\t" + password);
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("HEIMDALL", "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("HEIMDALL", "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
 
-                            startActivity(intent);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("HEIMDALL", "signInWithEmail:failure", task.getException());
+                                startActivity(intent);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("HEIMDALL", "signInWithEmail:failure", task.getException());
+                            }
+
+                            // ...
                         }
+                    });
+        }else{
+            Log.d("HEIMDALL", "email or password not supplied");
 
-                        // ...
-                    }
-                });
+        }
 
     }
 

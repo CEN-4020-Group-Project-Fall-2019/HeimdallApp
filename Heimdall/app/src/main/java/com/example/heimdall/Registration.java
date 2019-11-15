@@ -28,28 +28,35 @@ public class Registration extends AppCompatActivity {
     }
 
     public void createUser(View view){
+
         TextView em = findViewById(R.id.email);
         TextView ps = findViewById(R.id.password);
 
-        CharSequence email = em.getText();
-        CharSequence password = ps.getText();
 
-        Log.d("HEIMDALL", email.toString() + "\t" + password.toString());
+        if(em.getText().length() > 0 && ps.getText().length() > 0) {
+            CharSequence email = em.getText();
+            CharSequence password = ps.getText();
 
-        mAuth.createUserWithEmailAndPassword( email.toString(), password.toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("HEIMDALL", "createUserWithEmail:success");
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("HEIMDALL", "createUserWithEmail:failure", task.getException());
+            Log.d("HEIMDALL", email.toString() + "\t" + password.toString());
 
+            mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("HEIMDALL", "createUserWithEmail:success");
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("HEIMDALL", "createUserWithEmail:failure", task.getException());
+
+                            }
                         }
-                    }
-                });
+                    });
+        }else{
+            Log.d("HEIMDALL", "email or password not supplied");
+
+        }
 
 
     }
