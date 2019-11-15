@@ -40,11 +40,9 @@ public class MainActivity extends AppCompatActivity {
         String email = em.getText().toString();
         String password = pw.getText().toString();
 
-        if(email.length() >= 0 && password.length() >= 0) {
+        if(email.length() > 0 && password.length() > 0) {
             Log.d("HEIMDALL", email + "\t\t" + password);
-            /*TODO Hardcoding values to test easier; don't forget to change this
-            /*function to accept 'email' and 'password'*/
-            mAuth.signInWithEmailAndPassword("a@a.com", "jacob12")
+            mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
