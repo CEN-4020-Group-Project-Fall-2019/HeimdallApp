@@ -59,7 +59,7 @@
         android:id="@+id/settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onAddField"
+        android:onClick="settingsScreen"
         android:text="@string/settings"
         app:layout_constraintBottom_toBottomOf="@+id/cardInfoButton"
         app:layout_constraintEnd_toEndOf="parent"
