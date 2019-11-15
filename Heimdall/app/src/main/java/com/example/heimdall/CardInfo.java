@@ -22,7 +22,7 @@ public class CardInfo extends AppCompatActivity {
     }
 
     public void addTwitter(View view){
-//        Intent intent = new Intent(this, AddTwitter.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, AddTwitter.class);
+        startActivity(intent);
     }
 }

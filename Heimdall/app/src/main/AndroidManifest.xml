@@ -14,6 +14,10 @@
         <activity android:name=".ForgotPassword" />
         <activity android:name=".Home" />
         <activity android:name=".Registration" />
+        <activity android:name=".Settings" />
+        <activity android:name=".AddTwitter" />
+        <activity android:name=".company_info" />
+        <activity android:name=".Recommendation" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

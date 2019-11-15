@@ -91,20 +91,20 @@ public class Home extends AppCompatActivity {
     }
 
     public void infoScreen(View view){
-        Intent intent = new Intent(this, CardInfo.class);
+        Intent intent = new Intent(this, company_info.class);
         //TODO: Need to pass rowCount to all functions
-        intent.putExtra("numRows", rowCount);
+        //intent.putExtra("numRows", rowCount);
         startActivity(intent);
     }
 
     public void settingsScreen(View view){
-//        Intent intent = new Intent(this, Settings.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
     }
 
     public void recommendationsScreen(View view){
-//        Intent intent = new Intent(this, Recommendation.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, Recommendation.class);
+        startActivity(intent);
     }
 
 
