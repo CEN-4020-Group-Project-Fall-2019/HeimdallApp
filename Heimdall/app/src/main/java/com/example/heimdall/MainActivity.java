@@ -1,11 +1,14 @@
 package com.example.heimdall;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,8 +17,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("HEIMDALL", "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                //TODO: create entry in users DB with currentUser's UID
+                                final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference myRef = database.getReference("users");
+                                myRef.setValue(user.getUid());
+                                ArrayList<Map<String, ArrayList<String>>> watchList = new ArrayList<>();
+                                myRef.child(user.getUid()).setValue(watchList);
 
                                 startActivity(intent);
                             } else {

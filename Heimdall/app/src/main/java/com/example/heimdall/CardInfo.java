@@ -20,6 +20,7 @@ public class CardInfo extends AppCompatActivity {
 
     public void backScreen(View view){
         Intent intent = new Intent(this, Home.class);
+        intent.putExtra("numRows", rowCount);
         startActivity(intent);
     }
 

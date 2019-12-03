@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.support.v4.view.PagerAdapter;
+import android.widget.TextView;
 
 //import com.example.add_twiter_follow.ui.main.SectionsPagerAdapter;
 
@@ -30,8 +31,9 @@ public class company_info extends AppCompatActivity {
         };
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
+        String stockName = (String) getIntent().getCharSequenceExtra("stkName");
+        TextView title = findViewById(R.id.textView7);
+        title.setText(stockName);
     }
 
     //Added to keep some of Jacob's functionality

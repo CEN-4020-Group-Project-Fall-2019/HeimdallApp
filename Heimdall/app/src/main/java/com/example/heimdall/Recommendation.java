@@ -30,8 +30,8 @@ public class Recommendation extends AppCompatActivity {
         };
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
+        //TabLayout tabs = findViewById(R.id.tabs);
+        //tabs.setupWithViewPager(viewPager);
     }
 
     //Added to keep some of Jacob's functionality

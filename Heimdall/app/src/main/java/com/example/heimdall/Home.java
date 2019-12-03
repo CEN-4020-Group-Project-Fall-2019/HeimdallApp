@@ -13,6 +13,7 @@ import android.view.ViewParent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,17 +25,22 @@ import java.util.Map;
 
 public class Home extends AppCompatActivity {
     private LinearLayout parentLayout;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         parentLayout = findViewById(R.id.VerticalLayout);
+        mAuth = FirebaseAuth.getInstance();
         loadInCalls(this.getCurrentFocus());
     }
 
     public void backScreen(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+
+        //TODO: add logout functionality
+        mAuth.signOut();
     }
 
     public void addScreen(View view){
@@ -53,6 +59,9 @@ public class Home extends AppCompatActivity {
 
     public void onAddField(View v) {
 
+        Intent intent = new Intent(this, AddCard.class);
+        startActivity(intent);
+
         //View row = inflater.inflate(R.layout.field, null);
        /* TextView t = findViewById(R.id.textView10);
 
@@ -70,16 +79,17 @@ public class Home extends AppCompatActivity {
     }
 
     public void loadInCalls(View v){
+        String currentUser = mAuth.getUid();
         final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("puts");
+        DatabaseReference myRef = database.getReference(String.format("users/%s/watchList", currentUser));
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                View row = inflater.inflate(R.layout.field, parentLayout, false);
+                View row = inflater.inflate(R.layout.field, null);
                 Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
                 String stk = "";
 
@@ -91,12 +101,10 @@ public class Home extends AppCompatActivity {
                     stk = itr.next().getKey();
                     TextView tmp = (TextView) row;
                     Log.d("HEIMDALL", "itr is at " + stk);
-                    tmp.setTag(stk);
                     tmp.setId(i);
                     tmp.setText(stk +"(x.x%)");
                     parentLayout.addView(row);
-                    row = inflater.inflate(R.layout.field, parentLayout, false);
-                    ++i;
+                    row = inflater.inflate(R.layout.field, null);
                 }
 
 

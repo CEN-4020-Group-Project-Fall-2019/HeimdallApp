@@ -8,9 +8,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.support.v4.view.PagerAdapter;
+
+import com.google.firebase.auth.FirebaseAuth;
 //import com.example.add_twiter_follow.ui.main.SectionsPagerAdapter;
 
 public class Settings extends AppCompatActivity {
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +32,7 @@ public class Settings extends AppCompatActivity {
         };
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     //Added to keep some of Jacob's functionality
@@ -38,5 +40,17 @@ public class Settings extends AppCompatActivity {
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
+
+    public void resetPassword(View view){
+        Intent intent = new Intent(this, ForgotPassword.class);
+        startActivity(intent);
+    }
+
+   /* protected class User{
+        protected String email;
+        protected String username;
+
+
+    }*/
 
 }
