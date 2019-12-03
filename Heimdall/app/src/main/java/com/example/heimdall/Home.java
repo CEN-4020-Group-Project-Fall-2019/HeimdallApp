@@ -79,7 +79,7 @@ public class Home extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                View row = inflater.inflate(R.layout.field, null);
+                View row = inflater.inflate(R.layout.field, parentLayout, false);
                 Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
                 String stk = "";
 
@@ -91,10 +91,12 @@ public class Home extends AppCompatActivity {
                     stk = itr.next().getKey();
                     TextView tmp = (TextView) row;
                     Log.d("HEIMDALL", "itr is at " + stk);
+                    tmp.setTag(stk);
                     tmp.setId(i);
                     tmp.setText(stk +"(x.x%)");
                     parentLayout.addView(row);
-                    row = inflater.inflate(R.layout.field, null);
+                    row = inflater.inflate(R.layout.field, parentLayout, false);
+                    ++i;
                 }
 
 
@@ -111,9 +113,9 @@ public class Home extends AppCompatActivity {
     }
 
     public void infoScreen(View view){
-        Intent intent = new Intent(this, company_info.class);
-        //TODO: Need to pass rowCount to all functions
-        //intent.putExtra("numRows", rowCount);
+        TextView callingObject = findViewById(view.getId());
+        Intent intent = new Intent(this, CardInfo.class);
+        intent.putExtra("stkName", callingObject.getText());
         startActivity(intent);
     }
 

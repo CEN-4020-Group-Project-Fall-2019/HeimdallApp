@@ -87,7 +87,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
-        android:background="#D16565"
+        android:background="#303030"
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/homeToSignIn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +98,8 @@
             android:id="@+id/VerticalLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            android:paddingTop="15dp" />
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
