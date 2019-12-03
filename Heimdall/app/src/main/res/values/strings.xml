@@ -2,7 +2,8 @@
     <!--Jacob's strings-->
     <string name="app_name">Heimdall</string>
     <string name="sign_in">Sign in</string>
-    <string name="home">Home</string>
+    <string name="home">Home</string>Password
+    <string name="em">Email Address</string>
     <string name="registration">Register to use Heimdall</string>
     <string name="forgotpass">Reset your password</string>
     <string name="addCard">Add a card</string>
@@ -11,6 +12,7 @@
     <string name="recommendations">Card Recommendations</string>
     <string name="signint1"><u>Register an account</u></string>
     <string name="signint2"><u>Reset your password</u></string>
+    <string name="sign_out">Sign out</string>
     <!--Twitter additions page-->
     <!--<string name="app_name">add_twiter_follow</string>-->
     <string name="pageTitle">Adding Twitter Follows</string>
@@ -25,8 +27,7 @@
     <string name="title_activity_settings">settings</string>
     <string name="personalInfo">Personal Information</string>
     <string name="username">Username</string>
-    <string name="userName">myName</string>
-    <string name="password">Password</string>
+    <string name="pw">Password</string>
     <string name="email">Email</string>
     <string name="emailDefault">someone@example.com</string>
     <string name="subscription">Receive email updates</string>
@@ -34,4 +35,9 @@
     <string name="temp">Temp</string>
     <string name="title_activity_recommendations">recommendations</string>
     <!--reuse of tab tags given above-->
+    <!--Company Info Page-->
+    <string name="title">Company Info</string>
+    <!--Add Card Page-->
+    <string name="add">Enter stock name&#8230;</string>
+    <string name="add2Watch">Add to Watchlist</string>
 </resources>

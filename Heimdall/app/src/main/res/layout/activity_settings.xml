@@ -9,7 +9,14 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#25B624">
+        android:background="#364236">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="toHome"
+            android:text="Back to Home" />
 
         <TextView
             android:id="@+id/title"
@@ -20,45 +27,6 @@
             android:text="@string/settings"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="toHome"
-            android:text="Back to Home" />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#25B624"
-            app:tabIndicatorColor="#070A06">
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/Home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="toHome"
-                android:text="@string/home" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/recomend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/recomend" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/addTwiter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/twitterAdd" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings" />
-        </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
@@ -79,8 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="130dp"
             android:text="@string/personalInfo"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,20 +61,18 @@
             android:layout_marginLeft="60dp"
             android:layout_marginTop="16dp"
             android:text="@string/username"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ex" />
 
-        <EditText
-            android:id="@+id/enterUsername"
-            android:layout_width="195dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
             android:layout_marginTop="4dp"
-            android:ems="10"
-            android:hint="@string/userName"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
+            android:text="usersEmail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username" />
 
@@ -115,61 +82,60 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
             android:layout_marginLeft="60dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/password"
+            android:layout_marginTop="8dp"
+            android:text="@string/pw"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enterUsername" />
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-        <EditText
-            android:id="@+id/enterPassword"
+        <TextView
+            android:id="@+id/pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="4dp"
-            android:ems="10"
-            android:hint="@string/password"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:text="@string/password"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="16dp"
+            android:password="true"
+            android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Password" />
 
+        <Button
+            android:id="@+id/button13"
+            android:layout_width="198dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:onClick="resetPassword"
+            android:text="@string/signint2"
+            app:layout_constraintStart_toEndOf="@+id/pw"
+            app:layout_constraintTop_toBottomOf="@+id/Password" />
+
         <TextView
-            android:id="@+id/email"
+            android:id="@+id/update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/email"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginRight="130dp"
+            android:text="@string/subscription"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/switch1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enterPassword" />
-
-        <EditText
-            android:id="@+id/enterEmail"
-            android:layout_width="195dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="4dp"
-            android:ems="10"
-            android:hint="@string/emailDefault"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email" />
+            app:layout_constraintTop_toBottomOf="@+id/pw" />
 
         <Switch
             android:id="@+id/switch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/subscription"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enterEmail" />
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button13" />
 
     </android.support.constraint.ConstraintLayout>
 

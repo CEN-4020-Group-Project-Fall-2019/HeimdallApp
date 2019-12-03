@@ -6,28 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".AddCard">
 
-    <Button
-        android:id="@+id/addToHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="backScreen"
-        android:text="@string/home"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".settings"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#364236">
+
+            <Button
+                android:id="@+id/button11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="backScreen"
+                android:text="Back to Home" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="?actionBarSize"
+                android:text="@string/addCard"
+                android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <EditText
+        android:id="@+id/followStock"
+        android:layout_width="177dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
+        android:ems="10"
+        android:hint="@string/add"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:layout_constraintVertical_bias="0.092" />
+        app:layout_constraintTop_toTopOf="@+id/coordinatorLayout" />
 
-    <TextView
-        android:id="@+id/textView6"
+    <Button
+        android:id="@+id/addToWatchlist"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/addCard"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:onClick="addStockCard"
+        android:text="@string/add2Watch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/followStock" />
+
 </android.support.constraint.ConstraintLayout>
