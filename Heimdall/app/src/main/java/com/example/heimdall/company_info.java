@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.w3c.dom.Text;
 
@@ -88,6 +89,22 @@ public class company_info extends AppCompatActivity {
 
             }
         });
+
+
+        com.jjoe64.graphview.series.LineGraphSeries<com.jjoe64.graphview.series.DataPoint> series;
+        DatabaseReference myRef = db.getReference(String.format("stocks/%s/meta/regularMarketPrice", stockName));
+        DatabaseReference myRef2 = db.getReference(String.format("stocks/%s/meta/regularMarketTime", stockName));
+        double value, time;
+        com.jjoe64.graphview.GraphView graph = (com.jjoe64.graphview.GraphView) findViewById(R.id.graph);
+        series = new LineGraphSeries<>();
+
+        for(int i = 0; i < 500; i++){
+            time = 0;//get from db here;
+            value = 0;//get from db here;
+            series.appendData(new com.jjoe64.graphview.series.DataPoint(time,value), true, 500);
+        }
+
+        graph.addSeries(series);
     }
 
     //Added to keep some of Jacob's functionality

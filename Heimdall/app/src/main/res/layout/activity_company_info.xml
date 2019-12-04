@@ -25,12 +25,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.jjoe64.graphview.GraphView
             android:id="@+id/graph"
-            android:layout_width="200dp"
+            android:layout_width="275dp"
             android:layout_height="200dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="16dp"
-            android:background="#353535"
+            android:layout_marginRight="25dp"
+            android:background="#DDDDDD"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:text="graph"
             android:textColor="#FCF9F9"
             app:layout_constraintEnd_toEndOf="parent"
