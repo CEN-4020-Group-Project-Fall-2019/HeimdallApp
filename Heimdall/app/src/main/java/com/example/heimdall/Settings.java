@@ -39,6 +39,11 @@ public class Settings extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void toRecPage(View view){
+        Intent intent = new Intent(this, Recommendation.class);
+        startActivity(intent);
+    }
+
     //Added to keep some of Jacob's functionality
     public void toHome(View view){
         Intent intent = new Intent(this, Home.class);

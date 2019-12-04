@@ -17,7 +17,7 @@
             android:layout_height="75dp"
             android:background="#353535"
             android:gravity="center"
-            android:text="@string/personalInfo"
+            android:text="Settings"
             android:textColor="#FCF9F9"
             android:textSize="24sp"
             app:fontFamily="@font/cinzel"
@@ -30,9 +30,11 @@
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:text="Email"
+            android:textColor="#000"
             android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ex" />
@@ -41,9 +43,11 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:text="usersEmail"
+            android:textColor="#000"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username" />
@@ -52,35 +56,26 @@
             android:id="@+id/Password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="25dp"
             android:text="Change Password"
+            android:textColor="#000"
             android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-        <Button
-            android:id="@+id/button13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:alpha="0"
-            android:background="@android:drawable/editbox_dropdown_dark_frame"
-            android:onClick="resetPassword"
-            android:text="Submit"
-            android:textColor="#F8F8F8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editText2"
-            app:layout_constraintTop_toBottomOf="@+id/Password" />
 
         <TextView
             android:id="@+id/update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:text="@string/subscription"
+            android:textColor="#000"
             android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText2" />
@@ -89,14 +84,12 @@
             android:id="@+id/switch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
-            android:padding="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/update"
-            app:layout_constraintTop_toBottomOf="@+id/button13" />
+            tools:layout_editor_absoluteY="309dp" />
 
         <Button
             android:id="@+id/button"
@@ -113,11 +106,13 @@
             android:id="@+id/editText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="New Password"
             android:inputType="textPassword"
+            android:textColor="#000"
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Password" />
@@ -126,15 +121,17 @@
             android:id="@+id/button14"
             android:layout_width="0dp"
             android:layout_height="60dp"
+            android:layout_marginTop="30dp"
             android:background="@android:drawable/editbox_dropdown_dark_frame"
             android:onClick="signOut"
             android:text="Sign Out"
             android:textColor="#F8F8F8"
-            android:textSize="30dp"
+            android:textSize="24dp"
             app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/update" />
+            app:layout_constraintTop_toBottomOf="@+id/button2"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/button16"
@@ -146,6 +143,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editText2"
             app:layout_constraintTop_toBottomOf="@+id/Password" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:background="@android:drawable/editbox_dropdown_dark_frame"
+            android:onClick="toRecPage"
+            android:text="Stock Recommendations"
+            android:textColor="#F8F8F8"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/update" />
 
     </android.support.constraint.ConstraintLayout>
 
