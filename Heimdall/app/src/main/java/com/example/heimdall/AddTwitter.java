@@ -38,8 +38,6 @@ public class AddTwitter extends AppCompatActivity {
 
         stockToFind = (String) getIntent().getCharSequenceExtra("stkName");
         System.out.print(stockToFind);
-        TextView title = findViewById(R.id.title);
-        title.setText(stockToFind);
 
         context = getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
@@ -89,18 +87,13 @@ public class AddTwitter extends AppCompatActivity {
     public void addTwitterTerm(View view){
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_LONG;
-        TextView userEntry = findViewById(R.id.findAccount);
+        TextView userEntry = findViewById(R.id.followStock2);
         String twitterTerm = userEntry.getText().toString();
 
-        if(dbStocks.contains(stockToFind)){
-            wlRef.child(currentUser).child("Watchlist").child(stockToFind).child(twitterTerm).setValue("Twitter Term Added");
-            toastMessage = stockToFind + " added successfully!";
-            Toast toast = Toast.makeText(context, toastMessage, duration);
-            toast.show();
-        }else{
-            toastMessage = stockToFind + " not found!";
-            Toast toast = Toast.makeText(context, toastMessage, duration);
-            toast.show();
-        }
+        wlRef.child(currentUser).child("Watchlist").child(stockToFind).child(twitterTerm).setValue("Twitter Term Added");
+        toastMessage = twitterTerm + " added successfully!";
+        Toast toast = Toast.makeText(context, toastMessage, duration);
+        toast.show();
+
     }
 }

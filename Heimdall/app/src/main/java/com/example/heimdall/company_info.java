@@ -125,9 +125,16 @@ public class company_info extends AppCompatActivity {
         });
     }
 
+    public void removeStock(View view){
+
+        wlRef.child(currentUser).child("Watchlist").child(stockName).removeValue();
+    }
+
     public void toAddTwitter(View view) {
         //go to addTwitter page
+        String stockToFind = (String) getIntent().getCharSequenceExtra("stkName");
         Intent intent = new Intent(this, AddTwitter.class);
+        intent.putExtra("stkName", stockToFind);
         startActivity(intent);
     }
 }
