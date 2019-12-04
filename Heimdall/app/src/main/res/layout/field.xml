@@ -9,5 +9,5 @@
     android:clickable="true"
     android:gravity="center"
     android:onClick="infoScreen"
-    android:text="STOCK (+x.x%)"
+    android:text="STOCK"
     android:textSize="24sp" />

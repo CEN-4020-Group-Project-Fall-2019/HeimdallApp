@@ -14,9 +14,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Registration extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private FirebaseDatabase dbConnection;
+    private DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,20 +28,20 @@ public class Registration extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         mAuth = FirebaseAuth.getInstance();
+        dbConnection = FirebaseDatabase.getInstance();
+        dbRef = dbConnection.getReference("users");
 
     }
 
     public void createUser(View view){
 
-        TextView em = findViewById(R.id.email);
+        final TextView em = findViewById(R.id.email);
         TextView ps = findViewById(R.id.password);
 
 
         if(em.getText().length() > 0 && ps.getText().length() > 0) {
-            CharSequence email = em.getText();
+            final CharSequence email = em.getText();
             CharSequence password = ps.getText();
-
-            Log.d("HEIMDALL", email.toString() + "\t" + password.toString());
 
             mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -46,6 +50,9 @@ public class Registration extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("HEIMDALL", "createUserWithEmail:success");
+                                dbRef.child(mAuth.getUid()).setValue("Watchlist");
+                                dbRef.child(mAuth.getUid()).child("Watchlist").child("Stock1").setValue("Twitter");
+
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("HEIMDALL", "createUserWithEmail:failure", task.getException());

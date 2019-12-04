@@ -89,22 +89,20 @@ public class Home extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                View row = inflater.inflate(R.layout.field, null);
+                View row = inflater.inflate(R.layout.field, parentLayout, false);
                 Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
                 String stk = "";
 
                 int i = 197;
-                Log.d("HEIMDALL", "num children " + dataSnapshot.getChildrenCount());
-                Log.d("HEIMDALL", "IM HERE!!");
 
-                for(Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ){
+                for(Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i){
                     stk = itr.next().getKey();
                     TextView tmp = (TextView) row;
                     Log.d("HEIMDALL", "itr is at " + stk);
                     tmp.setId(i);
-                    tmp.setText(stk +"(x.x%)");
+                    tmp.setText(stk);
                     parentLayout.addView(row);
-                    row = inflater.inflate(R.layout.field, null);
+                    row = inflater.inflate(R.layout.field, parentLayout, false);
                 }
 
 
