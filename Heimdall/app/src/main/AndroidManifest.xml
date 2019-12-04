@@ -18,6 +18,7 @@
         <activity android:name=".AddTwitter" />
         <activity android:name=".company_info" />
         <activity android:name=".Recommendation" />
+        <activity android:name=".Graph"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
