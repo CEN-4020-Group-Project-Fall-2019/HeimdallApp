@@ -29,7 +29,7 @@ public class Registration extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         dbConnection = FirebaseDatabase.getInstance();
-        dbRef = dbConnection.getReference("users");
+        dbRef = dbConnection.getReference("watchList");
 
     }
 
@@ -51,7 +51,8 @@ public class Registration extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("HEIMDALL", "createUserWithEmail:success");
                                 dbRef.child(mAuth.getUid()).setValue("Watchlist");
-                                dbRef.child(mAuth.getUid()).child("Watchlist").child("Stock1").setValue("Twitter");
+                                //  This line is how you add a hierarchy. access a child through parent and set the value
+                                 dbRef.child(mAuth.getUid()).child("Watchlist").child("AAON").setValue("Twitter");
 
                             } else {
                                 // If sign in fails, display a message to the user.

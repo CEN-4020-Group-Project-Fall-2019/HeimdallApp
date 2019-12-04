@@ -79,18 +79,17 @@ public class Home extends AppCompatActivity {
     }
 
     public void loadInCalls(View v){
-        String currentUser = mAuth.getUid();
+        final String currentUser = mAuth.getUid();
         final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(String.format("users/%s/watchList", currentUser));
-
+        DatabaseReference myRef = database.getReference("watchList/");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 View row = inflater.inflate(R.layout.field, parentLayout, false);
-                Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
+                Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").getChildren();
                 String stk = "";
 
                 int i = 197;
@@ -98,7 +97,7 @@ public class Home extends AppCompatActivity {
                 for(Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i){
                     stk = itr.next().getKey();
                     TextView tmp = (TextView) row;
-                    Log.d("HEIMDALL", "itr is at " + stk);
+                    //Log.d("HEIMDALL", "itr is at " + stk);
                     tmp.setId(i);
                     tmp.setText(stk);
                     parentLayout.addView(row);
