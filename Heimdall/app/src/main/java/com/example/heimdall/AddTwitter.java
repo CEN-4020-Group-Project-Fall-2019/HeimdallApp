@@ -42,41 +42,12 @@ public class AddTwitter extends AppCompatActivity {
         context = getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getUid();
-        loadValues();
     }
 
     public void toAddTwitter(View view) {
         //go to addTwitter page
         Intent intent = new Intent(this, AddTwitter.class);
         startActivity(intent);
-    }
-
-    public void loadValues(){
-        final DatabaseReference stocksRef = database.getReference("stocks");
-        stocksRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
-                String stk = "";
-                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ) {
-                    stk = itr.next().getKey();
-                    if (!dbStocks.contains(stk)) {
-                        dbStocks.add(stk);
-                    }
-                }
-                Log.d("HEIMDALL", "running the thingy");
-                toastMessage = "Database finished loading. Feel free to enter values now.";
-                Toast toast = Toast.makeText(context, toastMessage, duration);
-                toast.show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
     }
 
     public void backScreen(View view){

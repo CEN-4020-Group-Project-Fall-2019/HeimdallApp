@@ -128,6 +128,8 @@ public class company_info extends AppCompatActivity {
     public void removeStock(View view){
 
         wlRef.child(currentUser).child("Watchlist").child(stockName).removeValue();
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
     }
 
     public void toAddTwitter(View view) {
