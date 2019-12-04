@@ -18,20 +18,25 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Vector;
 
 public class Home extends AppCompatActivity {
     private LinearLayout parentLayout;
     private FirebaseAuth mAuth;
+    Vector<String> wList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         parentLayout = findViewById(R.id.VerticalLayout);
         mAuth = FirebaseAuth.getInstance();
+        wList = new Vector<String>();
+        Log.d("HEIMDALL", "size: " + wList.size());
         loadInCalls(this.getCurrentFocus());
     }
 
@@ -79,33 +84,35 @@ public class Home extends AppCompatActivity {
     }
 
     public void loadInCalls(View v){
+
         final String currentUser = mAuth.getUid();
         final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("watchList/");
+
         myRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                View row = inflater.inflate(R.layout.field, parentLayout, false);
-                Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").getChildren();
-                String stk = "";
+                 View row = inflater.inflate(R.layout.field, parentLayout, false);
+                 Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").getChildren();
+                 String stk = "";
+                 int i = 176;
 
-                int i = 197;
-
-                for(Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i){
+                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i) {
                     stk = itr.next().getKey();
-                    TextView tmp = (TextView) row;
-                    //Log.d("HEIMDALL", "itr is at " + stk);
-                    tmp.setId(i);
-                    tmp.setText(stk);
-                    parentLayout.addView(row);
-                    row = inflater.inflate(R.layout.field, parentLayout, false);
+                    if (!wList.contains(stk)) {
+                        wList.add(stk);
+                        TextView tmp = (TextView) row;
+                        tmp.setId(i);
+                        tmp.setText(stk);
+                        parentLayout.addView(row);
+                        row = inflater.inflate(R.layout.field, parentLayout, false);
+                    }
+
                 }
-
-
-                //Log.d("HEIMDALL", "Number of values is: " + datas.toString());
 
             }
 
