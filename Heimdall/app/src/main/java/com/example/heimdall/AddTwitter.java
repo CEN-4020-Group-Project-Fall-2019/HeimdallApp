@@ -89,7 +89,7 @@ public class AddTwitter extends AppCompatActivity {
     public void addTwitterTerm(View view){
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_LONG;
-        TextView userEntry = findViewById(R.id.followStock2);
+        TextView userEntry = findViewById(R.id.findAccount);
         String twitterTerm = userEntry.getText().toString();
 
         if(dbStocks.contains(stockToFind)){
