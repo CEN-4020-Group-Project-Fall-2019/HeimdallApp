@@ -10,65 +10,59 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".settings">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".settings"
+        tools:layout_editor_absoluteX="0dp">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#364236">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/button11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="toHome"
+                android:onClick="backScreen"
                 android:text="Back to Home" />
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
-                android:layout_height="43dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:minHeight="?actionBarSize"
-                android:text="@string/pageTitle"
+                android:text="@string/addCard"
                 android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
     </android.support.design.widget.CoordinatorLayout>
 
-    <TextView
-        android:id="@+id/userInstruct"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="145dp"
-        android:text="@string/userDirect"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
-        android:id="@+id/findAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginTop="60dp"
-        android:cursorVisible="true"
+        android:id="@+id/followStock2"
+        android:layout_width="177dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
         android:ems="10"
-        android:hint="@string/search"
-        android:inputType="textPersonName"
-        android:importantForAutofill="no"
+        android:hint="@string/add"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userInstruct" />
+        app:layout_constraintTop_toTopOf="@+id/coordinatorLayout" />
 
-    <!--Added this to keep some of Jacob's functionality-->
+    <Button
+        android:id="@+id/addToWatchlist2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:alpha=".2"
+        android:clickable="false"
+        android:onClick="addTwitterTerm"
+        android:text="@string/add2Watch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/followStock2" />
 
 </android.support.constraint.ConstraintLayout>

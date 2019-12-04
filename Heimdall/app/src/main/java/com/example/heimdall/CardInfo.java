@@ -25,7 +25,9 @@ public class CardInfo extends AppCompatActivity {
     }
 
     public void addTwitter(View view){
+        String stockName = (String) getIntent().getCharSequenceExtra("stkName");
         Intent intent = new Intent(this, AddTwitter.class);
+        intent.putExtra("stkName", stockName);
         startActivity(intent);
     }
 }
