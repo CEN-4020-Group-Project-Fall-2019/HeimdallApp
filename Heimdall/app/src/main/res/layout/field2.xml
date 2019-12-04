@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="400dp"
-    android:layout_width="200dp"
-    android:layout_gravity="center">
-    <item android:id="@+id/menu_save"
-        android:title="menu_save" />
-    <!-- menu group -->
-    <group android:id="@+id/group_delete">
-        <item android:id="@+id/menu_archive"
-            android:title="menu_archive" />
-        <item android:id="@+id/menu_delete"
-            android:title="menu_delete" />
-    </group>
-
-</menu>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/twitterTermsTextview"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginBottom="7dp"
+    android:background="@android:drawable/editbox_dropdown_dark_frame"
+    android:clickable="true"
+    android:gravity="center"
+    android:onClick="deleteTerm"
+    android:text="STOCK"
+    android:textColor="#F8F8F8"
+    android:textSize="16dp" />

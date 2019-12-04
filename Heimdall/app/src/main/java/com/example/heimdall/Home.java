@@ -126,7 +126,7 @@ public class Home extends AppCompatActivity {
 
     public void infoScreen(View view){
         TextView callingObject = findViewById(view.getId());
-        Intent intent = new Intent(this, CardInfo.class);
+        Intent intent = new Intent(this, company_info.class);
         intent.putExtra("stkName", callingObject.getText());
         startActivity(intent);
     }
