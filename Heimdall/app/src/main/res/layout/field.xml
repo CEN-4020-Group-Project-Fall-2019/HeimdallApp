@@ -5,9 +5,10 @@
     android:layout_height="50dp"
     android:layout_marginTop="15dp"
     android:layout_marginBottom="15dp"
-    android:background="#D1D1D1"
+    android:background="@android:drawable/editbox_dropdown_dark_frame"
     android:clickable="true"
     android:gravity="center"
     android:onClick="infoScreen"
     android:text="STOCK"
+    android:textColor="#F8F8F8"
     android:textSize="24sp" />
