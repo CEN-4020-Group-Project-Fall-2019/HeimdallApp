@@ -2,6 +2,8 @@ package com.example.heimdall;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,25 +13,65 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Vector;
 
 public class AddCard extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    boolean foundStock = false;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference wlRef= database.getReference("watchList");
+
+    String stockToFind = "";
+    String currentUser = "";
+    Vector<String> dbStocks = new Vector<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_card);
         mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getUid();
+        loadValues();
+
+    }
+
+    public void loadValues(){
+        final DatabaseReference stocksRef = database.getReference("stocks");
+        stocksRef.keepSynced(true);
+        stocksRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String stk = "";
+                for (Iterator<DataSnapshot> itr = dataSnapshot.getChildren().iterator(); itr.hasNext();) {
+                    stk = itr.next().getKey();
+                    if (!dbStocks.contains(stk)) {
+                        dbStocks.add(stk);
+                    }
+                }
+                Log.d("HEIMDALL", "values" + dbStocks.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     public void backScreen(View view){
@@ -40,11 +82,24 @@ public class AddCard extends AppCompatActivity {
     //add function that calls info from Heimdallcen4020 and puts stock into UserDB: watchlist
     public void addStockCard(View view){
         final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(String.format("users/%s", mAuth.getUid())).child("watchList").push();
-        Log.d("Heimdall", mAuth.getUid());
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        TextView userEntry = findViewById(R.id.followStock);
+        stockToFind = userEntry.getText().toString();
+
+        Log.d("HEIMDALL", "valuesPT2" + dbStocks.toString());
+
+        if(dbStocks.contains(stockToFind)){
+            wlRef.child(currentUser).child("Watchlist").child(stockToFind).setValue("stck added");
+            foundStock = true;
+        }else{
+            Log.d("HEIMDALL", "fuuuuuuck");
+        }
+
+        if(foundStock) {
+            Intent intent = new Intent(this, Home.class);
+            startActivity(intent);
+        }
+    /*    myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 EditText stk = findViewById(R.id.followStock);
@@ -61,10 +116,9 @@ public class AddCard extends AppCompatActivity {
                 // Failed to read value
                 Log.w("HEIMDALL", "Failed to read value.", error.toException());
             }
-        });
+        }); */
 
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
+
 
         /*myRef.addValueEventListener(new ValueEventListener() {
             @Override

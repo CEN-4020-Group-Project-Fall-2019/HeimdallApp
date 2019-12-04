@@ -36,7 +36,6 @@ public class Home extends AppCompatActivity {
         parentLayout = findViewById(R.id.VerticalLayout);
         mAuth = FirebaseAuth.getInstance();
         wList = new Vector<String>();
-        Log.d("HEIMDALL", "size: " + wList.size());
         loadInCalls(this.getCurrentFocus());
     }
 
@@ -95,7 +94,10 @@ public class Home extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+                // whenever data at this location is updated. I am not accounting
+                // for removing a stock from the homepage because it is auto updated
+                // every time the homepage is loaded and an update from the homepage
+                // shouldn't happen.
                  View row = inflater.inflate(R.layout.field, parentLayout, false);
                  Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").getChildren();
                  String stk = "";
@@ -111,9 +113,7 @@ public class Home extends AppCompatActivity {
                         parentLayout.addView(row);
                         row = inflater.inflate(R.layout.field, parentLayout, false);
                     }
-
                 }
-
             }
 
             @Override
