@@ -54,9 +54,10 @@ public class AddCard extends AppCompatActivity {
         stocksRef.keepSynced(true);
         stocksRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
                 String stk = "";
-                for (Iterator<DataSnapshot> itr = dataSnapshot.getChildren().iterator(); itr.hasNext();) {
+                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext();) {
                     stk = itr.next().getKey();
                     if (!dbStocks.contains(stk)) {
                         dbStocks.add(stk);
@@ -66,7 +67,7 @@ public class AddCard extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -81,6 +82,7 @@ public class AddCard extends AppCompatActivity {
 
     //add function that calls info from Heimdallcen4020 and puts stock into UserDB: watchlist
     public void addStockCard(View view){
+
         final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         TextView userEntry = findViewById(R.id.followStock);
@@ -90,15 +92,10 @@ public class AddCard extends AppCompatActivity {
 
         if(dbStocks.contains(stockToFind)){
             wlRef.child(currentUser).child("Watchlist").child(stockToFind).setValue("stck added");
-            foundStock = true;
         }else{
-            Log.d("HEIMDALL", "fuuuuuuck");
+            Log.d("HEIMDALL", "Stock not found");
         }
 
-        if(foundStock) {
-            Intent intent = new Intent(this, Home.class);
-            startActivity(intent);
-        }
     /*    myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
