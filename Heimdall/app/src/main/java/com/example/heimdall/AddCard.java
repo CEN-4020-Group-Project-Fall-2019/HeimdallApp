@@ -88,65 +88,11 @@ public class AddCard extends AppCompatActivity {
         TextView userEntry = findViewById(R.id.followStock);
         stockToFind = userEntry.getText().toString();
 
-        Log.d("HEIMDALL", "valuesPT2" + dbStocks.toString());
-
         if(dbStocks.contains(stockToFind)){
             wlRef.child(currentUser).child("Watchlist").child(stockToFind).setValue("stck added");
         }else{
             Log.d("HEIMDALL", "Stock not found");
         }
 
-    /*    myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                EditText stk = findViewById(R.id.followStock);
-                String stock = stk.getText().toString();
-                ArrayList<String> twitL = new ArrayList<>();
-                Object twit = twitL;
-                Map<String, Object> map = new HashMap<>();
-                map.put(stock, twit);
-                myRef.updateChildren(map);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("HEIMDALL", "Failed to read value.", error.toException());
-            }
-        }); */
-
-
-
-        /*myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                View row = inflater.inflate(R.layout.field, null);
-                Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
-                String stk = "";
-
-                int i = 197;
-                Log.d("HEIMDALL", "num children " + dataSnapshot.getChildrenCount());
-                Log.d("HEIMDALL", "IM HERE!!");
-
-                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ) {
-                    stk = itr.next().getKey();
-                    TextView tmp = (TextView) row;
-                    Log.d("HEIMDALL", "itr is at " + stk);
-                    tmp.setId(i);
-                    tmp.setText(stk + "(x.x%)");
-                    parentLayout.addView(row);
-                    row = inflater.inflate(R.layout.field, null);
-                }
-
-            }
-
-            @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                    Log.w("HEIMDALL", "Failed to read value.", error.toException());
-                }
-        });*/
-        }
     }
+}

@@ -1,5 +1,6 @@
 package com.example.heimdall;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ public class Registration extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase dbConnection;
     private DatabaseReference dbRef;
+    CharSequence toastMessage = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +36,15 @@ public class Registration extends AppCompatActivity {
     }
 
     public void createUser(View view){
-
+        final Context context = getApplicationContext();
+        final int duration = Toast.LENGTH_LONG;
         final TextView em = findViewById(R.id.email);
         TextView ps = findViewById(R.id.password);
-
+        final Intent intent = new Intent(this, Home.class);
 
         if(em.getText().length() > 0 && ps.getText().length() > 0) {
             final CharSequence email = em.getText();
-            CharSequence password = ps.getText();
+            final CharSequence password = ps.getText();
 
             mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -49,20 +52,27 @@ public class Registration extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Log.d("HEIMDALL", "createUserWithEmail:success");
+                                toastMessage = "Account creation successful!";
+                                Toast toast = Toast.makeText(context, toastMessage, duration);
+                                toast.show();
                                 dbRef.child(mAuth.getUid()).setValue("Watchlist");
                                 //  This line is how you add a hierarchy. access a child through parent and set the value
-                                 dbRef.child(mAuth.getUid()).child("Watchlist").child("AAON").setValue("Twitter");
+                                //dbRef.child(mAuth.getUid()).child("Watchlist").child("AAON").setValue("Twitter");
+                                mAuth.signInWithEmailAndPassword(email.toString(), password.toString());
+                                startActivity(intent);
 
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Log.w("HEIMDALL", "createUserWithEmail:failure", task.getException());
-
+                                toastMessage = "Account not created. Email may already be in use or password is too short.";
+                                Toast toast = Toast.makeText(context, toastMessage, duration);
+                                toast.show();
                             }
                         }
                     });
         }else{
-            Log.d("HEIMDALL", "email or password not supplied");
+            toastMessage = "Provide email & password. Password must be > 5 characters.";
+            Toast toast = Toast.makeText(context, toastMessage, duration);
+            toast.show();
 
         }
 
