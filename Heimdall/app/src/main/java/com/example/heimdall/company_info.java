@@ -63,13 +63,10 @@ public class company_info extends AppCompatActivity {
     private DatabaseReference wlRef;
     private String currentUser;
     private String stockName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_info);
-
-        //Setting variables for later use
         stockName = (String) getIntent().getCharSequenceExtra("stkName");
         TextView title = findViewById(R.id.textView9);
         title.setText(stockName);
@@ -80,29 +77,42 @@ public class company_info extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         DatabaseReference stockRef = db.getReference("stocks");
         wlRef = db.getReference("watchList");
-
-        //Event listener for getting the market price of a stock
-        //and setting the top panel to reflect it
         stockRef.child(stockName).child("meta").child("regularMarketPrice").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 stockPrice.setText("Current: $" + dataSnapshot.getValue().toString());
 
-                //TODO: These probably shouldn't be here but I was afraid of deleting them
-                //Iterable<DataSnapshot> times = dataSnapshot.child("stocks").child(stockName).child("1m").child("t").getChildren();
-                ///Iterable<DataSnapshot> prices = dataSnapshot.child("stocks").child(stockName).child("1m").child("p").getChildren();
+                Iterable<DataSnapshot> times = dataSnapshot.child("stocks").child(stockName).child("1m").child("t").getChildren();
+                Iterable<DataSnapshot> prices = dataSnapshot.child("stocks").child(stockName).child("1m").child("p").getChildren();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
 
-        //Event listener for getting prices for the graph
-        //TODO: Let Sarah and Darbi document this
+        final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         stockRef.child(stockName).child("1m").child("p").orderByValue().limitToLast(100).addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+//                View row = inflater.inflate(R.layout.field2, parentLayout, false);
+//                Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").child(stockName).getChildren();
+//
+//
+//                String term = "";
+//                int i = 547;
+//
+//                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i) {
+//                    term = itr.next().getKey();
+//                    TextView tmp = (TextView) row;
+//                    tmp.setText(term);
+//                    tmp.setId(i);
+//
+//                    parentLayout.addView(tmp);
+//                    row = inflater.inflate(R.layout.field2, parentLayout, false);
+//
+//                }
 
 //                Iterable<DataSnapshot> times = dataSnapshot.child(stockName).child("1m").child("t").getChildren();
 //                Iterable<DataSnapshot> prices = dataSnapshot.child(stockName).child("1m").child("p").getChildren();
@@ -128,12 +138,23 @@ public class company_info extends AppCompatActivity {
 //                }
 
                 w = 0.;
+                Double min , max;
+
                 DataSnapshot tmpSnap;
+                min = max = (Double)prices.iterator().next().getValue();
                 for (Iterator<DataSnapshot> itr = prices.iterator(); itr.hasNext(); ++w) {
                     tmpSnap = itr.next();
                     p.add((Double) tmpSnap.getValue());
-                }
+                    if((Double) tmpSnap.getValue() < min){
+                        min = (Double) tmpSnap.getValue();
+                    }
+                    if((Double) tmpSnap.getValue() > max){
+                        max = (Double) tmpSnap.getValue();
+                    }
 
+                }
+                if(min < 0)
+                    min = 2.;
 //                int k = 0;
 //                for ( Iterator<DataSnapshot> d : prices.iterator()) {
 //                    double price = d.getValue(double.class);
@@ -181,22 +202,31 @@ public class company_info extends AppCompatActivity {
                     public String formatLabel(double value, boolean isValueX) {
                         if (isValueX) {
                             // show normal x values
-                            return super.formatLabel(value, isValueX);
+                            return super.formatLabel(100 - value, isValueX);
                         }else {
                             // show currency for y values
                             return "$" + super.formatLabel(value, isValueX);
                         }
                     }
                 });
+
+                /* this code was made in reference to examples in
+                    graphView library documentation
+                 */
+
+
                 // set manual X bounds
                 graph.getViewport().setXAxisBoundsManual(true);
                 graph.getViewport().setMinX(0);
-                graph.getViewport().setMaxX(100);
+                graph.getViewport().setMaxX(temp);
 
-// set manual Y bounds
+                // set manual Y bounds
                 graph.getViewport().setYAxisBoundsManual(true);
-                graph.getViewport().setMinY(0);
-                graph.getViewport().setMaxY(60);
+                if(min <= 0)
+                    graph.getViewport().setMinY(0);
+                else
+                    graph.getViewport().setMinY(min - 2);
+                graph.getViewport().setMaxY(max + 2);
 
 
                 graph.addSeries(series);
@@ -204,50 +234,20 @@ public class company_info extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        //Variable for dynamically adding rows
-        final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        //Event listener for getting the twitter terms
-        wlRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                View row = inflater.inflate(R.layout.field2, parentLayout, false);
-                Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").child(stockName).getChildren();
-                String term = "";
-                int i = 547;
-
-                //Goes through all children of the selected stock
-                //Adds a row to the scrollView and sets the text to
-                //reflect the term
-                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i) {
-                    term = itr.next().getKey();
-                    TextView tmp = (TextView) row;
-                    tmp.setText(term);
-                    tmp.setId(i);
-
-                    parentLayout.addView(tmp);
-                    row = inflater.inflate(R.layout.field2, parentLayout, false);
-
-                }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
+
     }
 
+    //Added to keep some of Jacob's functionality
+    public void toHome(View view){
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+    }
 
     public void deleteTerm(View view){
-        //The code is confusing. Sequence of events is this:
-        //1: User clicks twitter term row -> row text and
-        //1 cont.: onClick func changed; cancel button is set to visible
-        //If user clicks row again: Twitter term is deleted and row is
-        //removed
-        //If user cancels: Row is set to the original term, cancel button
-        //disappears
         final TextView callingObject = findViewById(view.getId());
         final String original = callingObject.getText().toString();
         callingObject.setText("Click again to delete or cancel using the button.");
@@ -277,21 +277,17 @@ public class company_info extends AppCompatActivity {
     }
 
     public void removeStock(View view){
-        //Navigate to proper db entry and remove it
+
         wlRef.child(currentUser).child("Watchlist").child(stockName).removeValue();
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 
     public void toAddTwitter(View view) {
+        //go to addTwitter page
         String stockToFind = (String) getIntent().getCharSequenceExtra("stkName");
         Intent intent = new Intent(this, AddTwitter.class);
         intent.putExtra("stkName", stockToFind);
-        startActivity(intent);
-    }
-
-    public void toHome(View view){
-        Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 }
