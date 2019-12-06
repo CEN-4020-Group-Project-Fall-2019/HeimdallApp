@@ -257,7 +257,22 @@ public class company_info extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 callingObject.setVisibility(View.GONE);
-                wlRef.child(currentUser).child("Watchlist").child(stockName).child(original).removeValue();
+                wlRef.child(currentUser).child("Watchlist").child(stockName).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d("HEIMDALL", "num " + dataSnapshot.getChildrenCount());
+                        if(dataSnapshot.getChildrenCount() == 1){
+                            wlRef.child(currentUser).child("Watchlist").child(stockName).setValue("Stock added");
+                        }else{
+                            wlRef.child(currentUser).child("Watchlist").child(stockName).child(original).removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 cancelButton.setVisibility(View.GONE);
             }
         });
