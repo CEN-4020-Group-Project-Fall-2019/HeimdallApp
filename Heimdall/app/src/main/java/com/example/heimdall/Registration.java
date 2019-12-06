@@ -42,10 +42,12 @@ public class Registration extends AppCompatActivity {
         TextView ps = findViewById(R.id.password);
         final Intent intent = new Intent(this, Home.class);
 
+        //Make sure the user entered values into email and password
         if(em.getText().length() > 0 && ps.getText().length() > 0) {
             final CharSequence email = em.getText();
             final CharSequence password = ps.getText();
 
+            //Main register functionality, just uses fireAuth's functions
             mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -55,9 +57,13 @@ public class Registration extends AppCompatActivity {
                                 toastMessage = "Account creation successful!";
                                 Toast toast = Toast.makeText(context, toastMessage, duration);
                                 toast.show();
+
+                                //Creating user's watchlist
                                 dbRef.child(mAuth.getUid()).setValue("Watchlist");
                                 //  This line is how you add a hierarchy. access a child through parent and set the value
                                 //dbRef.child(mAuth.getUid()).child("Watchlist").child("AAON").setValue("Twitter");
+
+                                //Sign the user in and bring them to homescreen
                                 mAuth.signInWithEmailAndPassword(email.toString(), password.toString());
                                 startActivity(intent);
 

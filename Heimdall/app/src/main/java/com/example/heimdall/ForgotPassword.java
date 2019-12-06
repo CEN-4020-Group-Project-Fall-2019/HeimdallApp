@@ -32,11 +32,17 @@ public class ForgotPassword extends AppCompatActivity {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_LONG;
 
+        //Check to make sure something was entered
         if(em.getText().length() > 0) {
+            //Get the email from the text input
             String userEmail = em.getText().toString();
+
+            //Make the user feel good
             toastMessage = "Email sent successfully (if user exists).";
             Toast toast = Toast.makeText(context, toastMessage, duration);
             toast.show();
+
+            //Actually send email to allow reset and send to sign in page
             mAuth.sendPasswordResetEmail(userEmail);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

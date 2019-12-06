@@ -55,14 +55,15 @@ public class MainActivity extends AppCompatActivity {
         final Context context = getApplicationContext();
         final int duration = Toast.LENGTH_LONG;
 
+        //Main login functionality, just checks for user
+        //entries and checks with db if they're right.
+        //Also provides some error checking popups for user
         if(email.length() > 0 && password.length() > 0) {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                //Log.d("HEIMDALL", "signInWithEmail:success");
                                 toastMessage = "Sign in successful!";
                                 Toast toast = Toast.makeText(context, toastMessage, duration);
                                 toast.show();
