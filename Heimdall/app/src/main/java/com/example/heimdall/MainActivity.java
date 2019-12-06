@@ -1,7 +1,10 @@
 package com.example.heimdall;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        createNotificationChannel();
     }
 
     public void resetPassword(View view){
@@ -62,14 +66,6 @@ public class MainActivity extends AppCompatActivity {
                                 toastMessage = "Sign in successful!";
                                 Toast toast = Toast.makeText(context, toastMessage, duration);
                                 toast.show();
-                                /*FirebaseUser user = mAuth.getCurrentUser();
-                                //TODO: create entry in users DB with currentUser's UID
-                                final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                DatabaseReference myRef = database.getReference("users");
-                                myRef.setValue(user.getUid());
-                                ArrayList<Map<String, ArrayList<String>>> watchList = new ArrayList<>();
-                                myRef.child(user.getUid()).setValue(watchList);*/
 
                                 startActivity(intent);
                             } else {
@@ -94,5 +90,23 @@ public class MainActivity extends AppCompatActivity {
     public void register(View view){
         Intent intent = new Intent(this, Registration.class);
         startActivity(intent);
+    }
+
+    //must create channel before send notifications, so creating as soon as app opens
+    //not 100% on what CHANNEL_ID is supposed to be...but constructor on documentation showed as a string. So made a string with random name
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(getString(R.string.CHANNEL_ID), name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

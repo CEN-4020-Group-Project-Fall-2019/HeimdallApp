@@ -1,8 +1,11 @@
 package com.example.heimdall;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -140,6 +143,17 @@ public class Home extends AppCompatActivity {
         Intent intent = new Intent(this, Recommendation.class);
         startActivity(intent);
     }
+
+    //Intent intent = new Intent(this, Home.class);
+    //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+    //Building notifications
+    //NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.CHANNEL_ID))
+            //.setSmallIcon(/*not sure what to put here or if we can ignore it*/)
+    //        .setContentTitle("TitleToBe")
+    //        .setContentText("MSG to user here")
+    //        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+    //        //.setContentIntent(pendingIntent) //intent to open upon user click...probably don't need this...
+    //        .setAutoCancel(true);
 
 
 }

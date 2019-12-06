@@ -40,4 +40,8 @@
     <!--Add Card Page-->
     <string name="add">Enter stock name&#8230;</string>
     <string name="add2Watch">Add to Watchlist</string>
+    <!--The notifications stuff: channel == category notification falls under that user sees-->
+    <string name="channel_name">Stock Updates</string>
+    <string name="channel_description">We will send you these notifications when there are any updates to stock prices</string>
+    <string name="CHANNEL_ID">first</string>
 </resources>
