@@ -121,18 +121,30 @@ public class company_info extends AppCompatActivity {
 
                 Iterable<DataSnapshot> prices = dataSnapshot.getChildren();
 
-                Log.d("CHILD COUNT", Long.toString(dataSnapshot.child(stockName).child("1m").child("p").getChildrenCount()));
-
 //                for (Iterator<DataSnapshot> itr = times.iterator(); itr.hasNext(); ++q) {
 //                    t.add( Double.valueOf(itr.next().getKey()));
 //                }
 
                 w = 0.;
+                Double min, max ;
+
                 DataSnapshot tmpSnap;
+                min = max = (double) prices.iterator().next().getValue();
                 for (Iterator<DataSnapshot> itr = prices.iterator(); itr.hasNext(); ++w) {
                     tmpSnap = itr.next();
                     p.add((Double) tmpSnap.getValue());
+                    if((Double) tmpSnap.getValue() < min){
+                        min = (Double) tmpSnap.getValue();
+                    }
+                    if((Double) tmpSnap.getValue() > max){
+                        max = (Double) tmpSnap.getValue();
+                    }
+
                 }
+                if(min < 0){
+                    min = 2.;
+                }
+
 
 //                int k = 0;
 //                for ( Iterator<DataSnapshot> d : prices.iterator()) {
@@ -140,9 +152,8 @@ public class company_info extends AppCompatActivity {
 //                    k++;
 //                }
 
-
-                for(Double track = 0.; track < 50; track++){
-                    t.add(track);
+                for(double tracker = 0.; tracker < 50; tracker = tracker + 1){
+                    t.add(tracker);
                 }
 //                for (Object data : dataSnapshot.child("stocks").child(stockName).child("1m").child("t").getChildren()) {
 //                    t[l++] = (Double) (data);
@@ -191,12 +202,14 @@ public class company_info extends AppCompatActivity {
                 // set manual X bounds
                 graph.getViewport().setXAxisBoundsManual(true);
                 graph.getViewport().setMinX(0);
-                graph.getViewport().setMaxX(100);
+                graph.getViewport().setMaxX(temp);
 
 // set manual Y bounds
-                graph.getViewport().setYAxisBoundsManual(true);
-                graph.getViewport().setMinY(0);
-                graph.getViewport().setMaxY(60);
+                if(min <= 0)
+                    graph.getViewport().setMinY(0);
+                else
+                    graph.getViewport().setMinY(min - 2);
+                graph.getViewport().setMaxY(max + 2);
 
 
                 graph.addSeries(series);
