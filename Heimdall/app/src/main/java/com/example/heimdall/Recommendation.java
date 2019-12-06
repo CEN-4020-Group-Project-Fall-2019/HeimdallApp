@@ -1,10 +1,14 @@
 package com.example.heimdall;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -35,9 +39,11 @@ public class Recommendation extends AppCompatActivity {
         DatabaseReference recRef = db.getReference("recommended");
 
         //Event listener for the recommended database
-        recRef.orderByChild("diff").limitToLast(10).addListenerForSingleValueEvent(new ValueEventListener() {
+        recRef.orderByChild("diff").limitToLast(10).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                displayNotification();
+
                 Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
                 parentLayout = findViewById(R.id.RecLayout);
                 final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -66,6 +72,26 @@ public class Recommendation extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void displayNotification(){
+        //Code to create an intent that launches into the recommendations
+        //page
+        Intent resultIntent = new Intent(this, Recommendation.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //Setting up notification content and then displaying
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "HEIMDALL")
+                .setSmallIcon(R.drawable.googleg_disabled_color_18)
+                .setContentIntent(resultPendingIntent)
+                .setContentTitle("Heimdall")
+                .setContentText("Recommendations have been updated!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat nManager = NotificationManagerCompat.from(this);
+        nManager.notify(975, builder.build());
     }
 
     //Added to keep some of Jacob's functionality

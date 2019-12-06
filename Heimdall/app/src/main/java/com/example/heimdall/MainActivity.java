@@ -1,11 +1,14 @@
 package com.example.heimdall;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,13 +35,14 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     CharSequence toastMessage = "";
     private FirebaseAuth mAuth;
+    private String CHANNEL_ID = "HEIMDALL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        createNotificationChannel();
+        createNotificationChannel(CHANNEL_ID);
     }
 
     public void resetPassword(View view){
@@ -95,14 +99,14 @@ public class MainActivity extends AppCompatActivity {
 
     //must create channel before send notifications, so creating as soon as app opens
     //not 100% on what CHANNEL_ID is supposed to be...but constructor on documentation showed as a string. So made a string with random name
-    private void createNotificationChannel() {
+    private void createNotificationChannel(String ch_id) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(getString(R.string.CHANNEL_ID), name, importance);
+            NotificationChannel channel = new NotificationChannel(ch_id, name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
