@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecommendationCompanyInfo">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DDDDDD">
+
+        <TextView
+            android:id="@+id/RecStockName"
+            android:layout_width="411dp"
+            android:layout_height="75dp"
+            android:background="#353535"
+            android:gravity="center"
+            android:text="Stock Name"
+            android:textColor="#FCF9F9"
+            android:textSize="32dp"
+            app:fontFamily="@font/cinzel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graphRecStock"
+            android:layout_width="275dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:background="#DDDDDD"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:text="graph"
+            android:textColor="#FCF9F9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/InfoRecStock" />
+
+        <TextView
+            android:id="@+id/InfoRecStock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Stock price"
+            android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/RecStockName" />
+
+        <Button
+            android:id="@+id/BackRecStock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:onClick="toRecScreen"
+            android:text="Back to Home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FollowRecStock"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/FollowRecStock"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:background="@android:drawable/editbox_dropdown_dark_frame"
+            android:text="Follow"
+            android:textColor="#F8F8F8"
+            android:textSize="20dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/graphRecStock" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.design.widget.CoordinatorLayout>

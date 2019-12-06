@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.v4.view.PagerAdapter;
@@ -32,7 +33,7 @@ public class Recommendation extends AppCompatActivity {
         setContentView(R.layout.activity_recommendation);
         db = FirebaseDatabase.getInstance();
         DatabaseReference recRef = db.getReference("recommended");
-        recRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        recRef.orderByChild("diff").limitToLast(10).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> datas = dataSnapshot.getChildren();
@@ -41,8 +42,10 @@ public class Recommendation extends AppCompatActivity {
                 View row = inflater.inflate(R.layout.field3, parentLayout, false);
                 String stk = "";
                 int i = 297;
+                DataSnapshot tmpSnap;
                 for(Iterator<DataSnapshot> itr = datas.iterator(); i < 307; ++i){
-                    stk = itr.next().getKey();
+                    tmpSnap = itr.next();
+                    stk = tmpSnap.getKey();
                     TextView tmp = (TextView) row;
                     tmp.setId(i);
                     tmp.setText(stk);
@@ -68,7 +71,9 @@ public class Recommendation extends AppCompatActivity {
 
     public void toRecPage(View view) {
         //go to Company Info page
-        Intent intent = new Intent(this, Recommendation.class);
+        TextView callingObject = findViewById(view.getId());
+        Intent intent = new Intent(this, RecommendationCompanyInfo.class);
+        intent.putExtra("stkName", callingObject.getText());
         startActivity(intent);
     }
 }
