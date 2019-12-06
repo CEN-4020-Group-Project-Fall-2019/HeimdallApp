@@ -84,7 +84,7 @@ public class Recommendation extends AppCompatActivity {
 
         //Setting up notification content and then displaying
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "HEIMDALL")
-                .setSmallIcon(R.drawable.googleg_disabled_color_18)
+                .setSmallIcon(R.drawable.common_full_open_on_phone)
                 .setContentIntent(resultPendingIntent)
                 .setContentTitle("Heimdall")
                 .setContentText("Recommendations have been updated!")
