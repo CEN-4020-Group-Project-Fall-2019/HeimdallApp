@@ -69,6 +69,7 @@ public class company_info extends AppCompatActivity {
                 View row = inflater.inflate(R.layout.field2, parentLayout, false);
                 Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").child(stockName).getChildren();
 
+
                 String term = "";
                 int i = 547;
 
@@ -82,6 +83,61 @@ public class company_info extends AppCompatActivity {
                     row = inflater.inflate(R.layout.field2, parentLayout, false);
 
                 }
+
+                Iterable<DataSnapshot> times = dataSnapshot.child("stocks").child(stockName).child("1m").child("t").getChildren();
+                Iterable<DataSnapshot> prices = dataSnapshot.child("stocks").child(stockName).child("1m").child("p").getChildren();
+
+                com.jjoe64.graphview.series.LineGraphSeries<com.jjoe64.graphview.series.DataPoint> series;
+                com.jjoe64.graphview.GraphView graph = findViewById(R.id.graph);
+                series = new LineGraphSeries<>();
+
+                double[] t = new double[400];
+                double[] p = new double[400];
+                int l = 0 , k = 0;
+                //java.util.ArrayList<Double> t= new java.util.ArrayList<>();
+                //java.util.ArrayList<Double> p= new java.util.ArrayList<>();
+                for ( DataSnapshot ds : times) {
+                    double time = ds.child("stocks").child(stockName).child("1m").child("t").getValue(double.class);
+                    t[l] = time;
+                    System.out.print(time + "\n");
+                    l++;
+                }
+                for ( DataSnapshot d : prices) {
+                    double price = d.child("stocks").child(stockName).child("1m").child("p").getValue(double.class);
+                    p[k] = price;
+                    System.out.print(price + "\n");
+                    k++;
+                }
+                for(int j = 0; j < k; j++) {
+                    double x = t[j];
+                    double y = p[j];
+                    series.appendData(new com.jjoe64.graphview.series.DataPoint(x,y), true, 100);
+                }
+                graph.getGridLabelRenderer().setLabelFormatter(new com.jjoe64.graphview.DefaultLabelFormatter() {
+                    @Override
+                    public String formatLabel(double value, boolean isValueX) {
+                        if (isValueX) {
+                            // show normal x values
+                            return super.formatLabel(value, isValueX) + "m";
+                        }else {
+                            // show currency for y values
+                            return "$" + super.formatLabel(value, isValueX);
+                        }
+                    }
+                });
+                // set manual X bounds
+                graph.getViewport().setXAxisBoundsManual(true);
+                graph.getViewport().setMinX(0);
+                graph.getViewport().setMaxX(100);
+
+// set manual Y bounds
+                graph.getViewport().setYAxisBoundsManual(true);
+                graph.getViewport().setMinY(5);
+                graph.getViewport().setMaxY(100);
+
+
+                graph.addSeries(series);
+
             }
 
             @Override
@@ -91,7 +147,7 @@ public class company_info extends AppCompatActivity {
         });
 
 
-        com.jjoe64.graphview.series.LineGraphSeries<com.jjoe64.graphview.series.DataPoint> series;
+        /*com.jjoe64.graphview.series.LineGraphSeries<com.jjoe64.graphview.series.DataPoint> series;
         DatabaseReference myRef = db.getReference(String.format("stocks/%s/meta/regularMarketPrice", stockName));
         DatabaseReference myRef2 = db.getReference(String.format("stocks/%s/meta/regularMarketTime", stockName));
         double value, time;
@@ -102,9 +158,32 @@ public class company_info extends AppCompatActivity {
             time = 0;//get from db here;
             value = 0;//get from db here;
             series.appendData(new com.jjoe64.graphview.series.DataPoint(time,value), true, 500);
-        }
+        }*/
 
-        graph.addSeries(series);
+        //graph.addSeries(series);
+        /*DataSnapshot dataSnapshot;
+        Iterable<DataSnapshot> times = dataSnapshot.child("stocks").child(stockName).child("1m/t/").getChildren();
+                Iterable<DataSnapshot> prices = dataSnapshot.child("stocks").child(stockName).child("1m/p").getChildren();
+
+                com.jjoe64.graphview.series.LineGraphSeries<com.jjoe64.graphview.series.DataPoint> series;
+                com.jjoe64.graphview.GraphView graph = (com.jjoe64.graphview.GraphView) findViewById(R.id.graph);
+                series = new LineGraphSeries<>();
+
+                java.util.ArrayList<Double> t= new java.util.ArrayList<>();
+                java.util.ArrayList<Double> p= new java.util.ArrayList<>();
+                for (DataSnapshot ds : times) {
+                    Double time = ds.child("stocks").child(stockName).child("1m/t/").getValue(Double.class);
+                    t.add(time);
+                }
+                for (DataSnapshot d : prices) {
+                    Double price = d.child("stocks").child(stockName).child("1m/p/").getValue(Double.class);
+                    p.add(price);
+                }
+                for(int j = 0; j < 400; j++) {
+
+                    series.appendData(new com.jjoe64.graphview.series.DataPoint(t.get(i), p.get(i)), true, 400);
+                }
+                graph.addSeries(series);*/
     }
 
     //Added to keep some of Jacob's functionality
