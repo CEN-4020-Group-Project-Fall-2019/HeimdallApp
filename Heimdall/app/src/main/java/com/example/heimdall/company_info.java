@@ -22,10 +22,37 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import java.util.Collections;
 
 import org.w3c.dom.Text;
 
 import java.util.Iterator;
+import java.util.Vector;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewParent;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
 
 //import com.example.add_twiter_follow.ui.main.SectionsPagerAdapter;
 
@@ -54,6 +81,9 @@ public class company_info extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 stockPrice.setText("Current: $" + dataSnapshot.getValue().toString());
+
+                Iterable<DataSnapshot> times = dataSnapshot.child("stocks").child(stockName).child("1m").child("t").getChildren();
+                Iterable<DataSnapshot> prices = dataSnapshot.child("stocks").child(stockName).child("1m").child("p").getChildren();
             }
 
             @Override
@@ -63,62 +93,105 @@ public class company_info extends AppCompatActivity {
         });
 
         final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        wlRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        stockRef.child(stockName).child("1m").child("p").orderByValue().limitToLast(100).addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                View row = inflater.inflate(R.layout.field2, parentLayout, false);
-                Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").child(stockName).getChildren();
+//                View row = inflater.inflate(R.layout.field2, parentLayout, false);
+//                Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").child(stockName).getChildren();
+//
+//
+//                String term = "";
+//                int i = 547;
+//
+//                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i) {
+//                    term = itr.next().getKey();
+//                    TextView tmp = (TextView) row;
+//                    tmp.setText(term);
+//                    tmp.setId(i);
+//
+//                    parentLayout.addView(tmp);
+//                    row = inflater.inflate(R.layout.field2, parentLayout, false);
+//
+//                }
 
-
-                String term = "";
-                int i = 547;
-
-                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i) {
-                    term = itr.next().getKey();
-                    TextView tmp = (TextView) row;
-                    tmp.setText(term);
-                    tmp.setId(i);
-
-                    parentLayout.addView(tmp);
-                    row = inflater.inflate(R.layout.field2, parentLayout, false);
-
-                }
-
-                Iterable<DataSnapshot> times = dataSnapshot.child("stocks").child(stockName).child("1m").child("t").getChildren();
-                Iterable<DataSnapshot> prices = dataSnapshot.child("stocks").child(stockName).child("1m").child("p").getChildren();
+//                Iterable<DataSnapshot> times = dataSnapshot.child(stockName).child("1m").child("t").getChildren();
+//                Iterable<DataSnapshot> prices = dataSnapshot.child(stockName).child("1m").child("p").getChildren();
 
                 com.jjoe64.graphview.series.LineGraphSeries<com.jjoe64.graphview.series.DataPoint> series;
                 com.jjoe64.graphview.GraphView graph = findViewById(R.id.graph);
                 series = new LineGraphSeries<>();
 
-                double[] t = new double[400];
-                double[] p = new double[400];
-                int l = 0 , k = 0;
-                //java.util.ArrayList<Double> t= new java.util.ArrayList<>();
-                //java.util.ArrayList<Double> p= new java.util.ArrayList<>();
-                for ( DataSnapshot ds : times) {
-                    double time = ds.child("stocks").child(stockName).child("1m").child("t").getValue(double.class);
-                    t[l] = time;
-                    System.out.print(time + "\n");
-                    l++;
+//                double[] t = new double[400];
+//                double[] p = new double[400];
+                Vector<Double> t = new Vector<Double>();
+                Vector<Double> p = new Vector<Double>();
+
+                Double q = 0.;
+                Double w = 0.;
+
+                Iterable<DataSnapshot> prices = dataSnapshot.getChildren();
+
+                Log.d("CHILD COUNT", Long.toString(dataSnapshot.child(stockName).child("1m").child("p").getChildrenCount()));
+
+//                for (Iterator<DataSnapshot> itr = times.iterator(); itr.hasNext(); ++q) {
+//                    t.add( Double.valueOf(itr.next().getKey()));
+//                }
+
+                w = 0.;
+                DataSnapshot tmpSnap;
+                for (Iterator<DataSnapshot> itr = prices.iterator(); itr.hasNext(); ++w) {
+                    tmpSnap = itr.next();
+                    p.add((Double) tmpSnap.getValue());
                 }
-                for ( DataSnapshot d : prices) {
-                    double price = d.child("stocks").child(stockName).child("1m").child("p").getValue(double.class);
-                    p[k] = price;
-                    System.out.print(price + "\n");
-                    k++;
+
+//                int k = 0;
+//                for ( Iterator<DataSnapshot> d : prices.iterator()) {
+//                    double price = d.getValue(double.class);
+//                    k++;
+//                }
+
+
+                for(Double track = 0.; track < 50; track++){
+                    t.add(track);
                 }
-                for(int j = 0; j < k; j++) {
-                    double x = t[j];
-                    double y = p[j];
-                    series.appendData(new com.jjoe64.graphview.series.DataPoint(x,y), true, 100);
+//                for (Object data : dataSnapshot.child("stocks").child(stockName).child("1m").child("t").getChildren()) {
+//                    t[l++] = (Double) (data);
+//                }
+
+
+//                for ( DataSnapshot ds : times) {
+//                    Double time = (Double) ds.getValue();
+//                    Log.d("TIME", time.toString());
+//                    t[l] = time;
+//                    System.out.print(time + "\n");
+//                    l++;
+//                    k = 100;
+//                }
+//                for ( DataSnapshot d : prices) {
+//                    Double price = (Double) d.child("stocks").child(stockName).child("1m").child("p").getValue();
+//                    Log.d("PRICE", price.toString());
+//                    p[k] = price;
+//                    System.out.print(price + "\n");
+//                    k++;
+//                }
+
+//                for (i = 0; i < 20; i++){
+//                    t[i] = 50;
+//                    p[i] = 50;
+//                }
+                Collections.sort(t);
+
+                int temp = 0;
+                for(double num : p){
+                    series.appendData(new com.jjoe64.graphview.series.DataPoint(temp++, num), true, 100);
                 }
+
                 graph.getGridLabelRenderer().setLabelFormatter(new com.jjoe64.graphview.DefaultLabelFormatter() {
                     @Override
                     public String formatLabel(double value, boolean isValueX) {
                         if (isValueX) {
                             // show normal x values
-                            return super.formatLabel(value, isValueX) + "m";
+                            return super.formatLabel(value, isValueX);
                         }else {
                             // show currency for y values
                             return "$" + super.formatLabel(value, isValueX);
@@ -132,8 +205,8 @@ public class company_info extends AppCompatActivity {
 
 // set manual Y bounds
                 graph.getViewport().setYAxisBoundsManual(true);
-                graph.getViewport().setMinY(5);
-                graph.getViewport().setMaxY(100);
+                graph.getViewport().setMinY(0);
+                graph.getViewport().setMaxY(60);
 
 
                 graph.addSeries(series);
@@ -145,45 +218,7 @@ public class company_info extends AppCompatActivity {
 
             }
         });
-
-
-        /*com.jjoe64.graphview.series.LineGraphSeries<com.jjoe64.graphview.series.DataPoint> series;
-        DatabaseReference myRef = db.getReference(String.format("stocks/%s/meta/regularMarketPrice", stockName));
-        DatabaseReference myRef2 = db.getReference(String.format("stocks/%s/meta/regularMarketTime", stockName));
-        double value, time;
-        com.jjoe64.graphview.GraphView graph = (com.jjoe64.graphview.GraphView) findViewById(R.id.graph);
-        series = new LineGraphSeries<>();
-
-        for(int i = 0; i < 500; i++){
-            time = 0;//get from db here;
-            value = 0;//get from db here;
-            series.appendData(new com.jjoe64.graphview.series.DataPoint(time,value), true, 500);
-        }*/
-
-        //graph.addSeries(series);
-        /*DataSnapshot dataSnapshot;
-        Iterable<DataSnapshot> times = dataSnapshot.child("stocks").child(stockName).child("1m/t/").getChildren();
-                Iterable<DataSnapshot> prices = dataSnapshot.child("stocks").child(stockName).child("1m/p").getChildren();
-
-                com.jjoe64.graphview.series.LineGraphSeries<com.jjoe64.graphview.series.DataPoint> series;
-                com.jjoe64.graphview.GraphView graph = (com.jjoe64.graphview.GraphView) findViewById(R.id.graph);
-                series = new LineGraphSeries<>();
-
-                java.util.ArrayList<Double> t= new java.util.ArrayList<>();
-                java.util.ArrayList<Double> p= new java.util.ArrayList<>();
-                for (DataSnapshot ds : times) {
-                    Double time = ds.child("stocks").child(stockName).child("1m/t/").getValue(Double.class);
-                    t.add(time);
-                }
-                for (DataSnapshot d : prices) {
-                    Double price = d.child("stocks").child(stockName).child("1m/p/").getValue(Double.class);
-                    p.add(price);
-                }
-                for(int j = 0; j < 400; j++) {
-
-                    series.appendData(new com.jjoe64.graphview.series.DataPoint(t.get(i), p.get(i)), true, 400);
-                }
-                graph.addSeries(series);*/
+        
     }
 
     //Added to keep some of Jacob's functionality
