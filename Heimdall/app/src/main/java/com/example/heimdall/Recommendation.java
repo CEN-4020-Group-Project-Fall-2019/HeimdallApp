@@ -33,6 +33,8 @@ public class Recommendation extends AppCompatActivity {
         setContentView(R.layout.activity_recommendation);
         db = FirebaseDatabase.getInstance();
         DatabaseReference recRef = db.getReference("recommended");
+
+        //Event listener for the recommended database
         recRef.orderByChild("diff").limitToLast(10).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -43,6 +45,9 @@ public class Recommendation extends AppCompatActivity {
                 String stk = "";
                 int i = 297;
                 DataSnapshot tmpSnap;
+
+                //Goes through recommendations and adds a row for each
+                //one; switches text to show stock names
                 for(Iterator<DataSnapshot> itr = datas.iterator(); i < 307; ++i){
                     tmpSnap = itr.next();
                     stk = tmpSnap.getKey();

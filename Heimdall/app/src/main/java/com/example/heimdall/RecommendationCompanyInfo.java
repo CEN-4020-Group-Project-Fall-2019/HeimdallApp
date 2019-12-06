@@ -35,6 +35,8 @@ public class RecommendationCompanyInfo extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         DatabaseReference stockRef = db.getReference("stocks");
         wlRef = db.getReference("watchList");
+
+        //Get the price for the selected stock
         stockRef.child(stockName).child("meta").child("regularMarketPrice").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

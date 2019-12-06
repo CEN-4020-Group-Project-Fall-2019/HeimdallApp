@@ -60,12 +60,10 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
                     toastMessage = "Password changed successfully!";
                     Toast toast = Toast.makeText(context, toastMessage, duration);
                     toast.show();
                 } else {
-                    // If sign in fails, display a message to the user.
                     toastMessage = "Password unable to be changed";
                     Toast toast = Toast.makeText(context, toastMessage, duration);
                     toast.show();
