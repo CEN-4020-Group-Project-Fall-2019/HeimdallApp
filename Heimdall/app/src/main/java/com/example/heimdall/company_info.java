@@ -77,6 +77,7 @@ public class company_info extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         DatabaseReference stockRef = db.getReference("stocks");
         wlRef = db.getReference("watchList");
+
         stockRef.child(stockName).child("meta").child("regularMarketPrice").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -92,27 +93,10 @@ public class company_info extends AppCompatActivity {
             }
         });
 
-        final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         stockRef.child(stockName).child("1m").child("p").orderByValue().limitToLast(100).addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                View row = inflater.inflate(R.layout.field2, parentLayout, false);
-//                Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").child(stockName).getChildren();
-//
-//
-//                String term = "";
-//                int i = 547;
-//
-//                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i) {
-//                    term = itr.next().getKey();
-//                    TextView tmp = (TextView) row;
-//                    tmp.setText(term);
-//                    tmp.setId(i);
-//
-//                    parentLayout.addView(tmp);
-//                    row = inflater.inflate(R.layout.field2, parentLayout, false);
-//
-//                }
+
 
 //                Iterable<DataSnapshot> times = dataSnapshot.child(stockName).child("1m").child("t").getChildren();
 //                Iterable<DataSnapshot> prices = dataSnapshot.child(stockName).child("1m").child("p").getChildren();
@@ -218,7 +202,32 @@ public class company_info extends AppCompatActivity {
 
             }
         });
-        
+
+        final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        wlRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                View row = inflater.inflate(R.layout.field2, parentLayout, false);
+                Iterable<DataSnapshot> datas = dataSnapshot.child(currentUser).child("Watchlist").child(stockName).getChildren();
+
+                String term = "";
+                int i = 547;
+
+                for (Iterator<DataSnapshot> itr = datas.iterator(); itr.hasNext(); ++i) {
+                    term = itr.next().getKey();
+                    TextView tmp = (TextView) row;
+                    tmp.setText(term);
+                    tmp.setId(i);
+
+                    parentLayout.addView(tmp);
+                    row = inflater.inflate(R.layout.field2, parentLayout, false);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
     }
 
     //Added to keep some of Jacob's functionality

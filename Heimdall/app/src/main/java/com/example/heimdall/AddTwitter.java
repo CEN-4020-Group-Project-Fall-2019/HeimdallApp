@@ -36,6 +36,7 @@ public class AddTwitter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_twitter);
 
+        //Setting up variables for later use
         stockToFind = (String) getIntent().getCharSequenceExtra("stkName");
         System.out.print(stockToFind);
 
@@ -44,8 +45,24 @@ public class AddTwitter extends AppCompatActivity {
         currentUser = mAuth.getUid();
     }
 
+    public void addTwitterTerm(View view){
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_LONG;
+        TextView userEntry = findViewById(R.id.followStock2);
+        String twitterTerm = userEntry.getText().toString();
+
+        //Go to the database, navigate to the proper section, and set the term
+        //which adds the value if it isn't there already
+        wlRef.child(currentUser).child("Watchlist").child(stockToFind).child(twitterTerm).setValue("Twitter Term Added");
+
+        //Toast to let the user feel good about themselves
+        toastMessage = twitterTerm + " added successfully!";
+        Toast toast = Toast.makeText(context, toastMessage, duration);
+        toast.show();
+
+    }
+
     public void toAddTwitter(View view) {
-        //go to addTwitter page
         Intent intent = new Intent(this, AddTwitter.class);
         startActivity(intent);
     }
@@ -53,18 +70,5 @@ public class AddTwitter extends AppCompatActivity {
     public void backScreen(View view){
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
-    }
-
-    public void addTwitterTerm(View view){
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_LONG;
-        TextView userEntry = findViewById(R.id.followStock2);
-        String twitterTerm = userEntry.getText().toString();
-
-        wlRef.child(currentUser).child("Watchlist").child(stockToFind).child(twitterTerm).setValue("Twitter Term Added");
-        toastMessage = twitterTerm + " added successfully!";
-        Toast toast = Toast.makeText(context, toastMessage, duration);
-        toast.show();
-
     }
 }
